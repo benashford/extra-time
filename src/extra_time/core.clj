@@ -5,11 +5,11 @@
 (defmacro with-time [expr]
   `(let [start-time# (System/nanoTime)
          result# ~expr]
-    [
+     [
       (->
-        (System/nanoTime)
-        (- start-time#)
-        (/ 1000000.0))
+       (System/nanoTime)
+       (- start-time#)
+       (/ 1000000.0))
       result#]))
 
 (defmacro cap-time [tkey expr]
@@ -26,12 +26,16 @@
      :average (/ t c)
      :sum t}))
 
-(defn print-times []
-  (doseq [[k v] (sort-by first @*timings*)]
+(defn print-times [timings]
+  (doseq [[k v] (sort-by first timings)]
     (println k " => " (inspect v))))
 
-(defmacro report-times [& exprs]
+(defmacro with-times [& exprs]
   `(binding [*timings* (atom {})]
      (let [result# (cap-time :total (do ~@exprs))]
-       (print-times)
-       result#)))
+       [@*timings* result#])))
+
+(defmacro report-times [& exprs]
+  `(let [[timings# result#] (with-times ~@exprs)]
+     (print-times timings#)
+     result#))
