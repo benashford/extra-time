@@ -1,3 +1,5 @@
+[![Build Status](https://secure.travis-ci.org/benashford/extra-time.png)](http://travis-ci.org/benashford/extra-time)
+
 # extra-time
 
 A Clojure library designed to capture execution time in a more granular way than ```clojure.core```'s ```time```, but less so than a proper profiling tool.
