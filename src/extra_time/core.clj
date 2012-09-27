@@ -2,12 +2,18 @@
 
 (def ^:dynamic *timings* (atom {}))
 
+(def current-time #(System/nanoTime))
+
+(defmacro timing [& exprs]
+  `(binding [*timings* (atom {})]
+     (do ~@exprs)))
+
 (defmacro with-time [expr]
-  `(let [start-time# (System/nanoTime)
+  `(let [start-time# (current-time)
          result# ~expr]
      [
       (->
-       (System/nanoTime)
+       (current-time)
        (- start-time#)
        (/ 1000000.0))
       result#]))
@@ -31,9 +37,9 @@
     (println k " => " (inspect v))))
 
 (defmacro with-times [& exprs]
-  `(binding [*timings* (atom {})]
-     (let [result# (cap-time :total (do ~@exprs))]
-       [@*timings* result#])))
+  `(timing
+   (let [result# (cap-time :total (do ~@exprs))]
+     [@*timings* result#])))
 
 (defmacro report-times [& exprs]
   `(let [[timings# result#] (with-times ~@exprs)]
