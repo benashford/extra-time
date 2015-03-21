@@ -6,5 +6,4 @@
             :distribution :repo}
   :dependencies [[org.clojure/clojure "1.6.0"]]
   :profiles {:dev {:plugins [[lein-midje "2.0.0-SNAPSHOT"]]}
-             :test {:dependencies [[midje "1.4.0"]]}}
-  :main extra-time.core)
+             :test {:dependencies [[midje "1.4.0"]]}})
