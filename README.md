@@ -6,7 +6,9 @@ A Clojure library designed to capture execution time in a more granular way than
 
 ## Usage
 
-Obtainable from Clojars, add: ```[extra-time "0.1.1"]``` to your dependencies.
+Obtainable from Clojars:
+
+[![Clojars Project](http://clojars.org/extra-time/latest-version.svg)](http://clojars.org/extra-time)
 
 To capture timing information for a block, wrap with ```with-times```.  This returns a tuple containing first the timing information, as a map, secondly the result of the block:
 
